@@ -3,9 +3,59 @@
 
 #include <iostream>
 
+#include "Trie.h"
+#include <string>
+
 int main()
 {
     std::cout << "Hello World!\n";
+    setlocale(LC_ALL, "Russian");
+
+    struct TrieNode* root = getNewNode();
+    insert(root, "hello");
+    insert(root, "dog");
+    insert(root, "hell");
+    insert(root, "cat");
+    insert(root, "a");
+    insert(root, "hal");
+    insert(root, "fun");
+    insert(root, "fungus");
+    insert(root, "fear");
+    insert(root, "feature");
+    insert(root, "feat");
+
+    bool exit = false;
+    string pref;
+    string buff;
+    while (!exit)
+    {
+        std::cout << "Начните вводить слова. Нажмите enter для вывода списка вариантов конца слова." << std::endl;
+        std::cout << "Введите clear для начала ввода нового слова." << std::endl;
+        std::cout << "Введите new для начала добавления нового слова в словарь." << std::endl;
+        std::cout << "Введите exit для выхода" << std::endl;
+        cout << pref;
+        cin >> buff;
+        pref += buff;
+        if (buff == "exit")
+        {
+            exit = true; 
+            continue;
+        }
+        if (buff == "clear")
+        {
+            pref.clear();
+            continue;
+        }
+        if (buff == "new")
+        {
+            std::cout << "Введите новое слово." << std::endl;
+            cin >> buff;
+            insert(root, buff);
+            pref.clear();
+            continue;
+        }
+        printAutoSuggestions(root, pref);
+    }
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
